@@ -1,0 +1,54 @@
+group 'jedify'
+version '1'
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'spring-boot'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url 'http://repo.spring.io/libs-release' }
+    }
+
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.7.RELEASE'
+    }
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    /* Spring COnfiguration */
+    compile 'org.springframework.boot:spring-boot-legacy:1.0.0.RELEASE'
+    compile('org.springframework.boot:spring-boot-starter-web') /*{
+        exclude module: "spring-boot-starter-tomcat"
+    }*/
+    compile "org.springframework.boot:spring-boot-starter-jetty"
+    compile "org.springframework.boot:spring-boot-starter-actuator"
+    /* Servlet api configuration */
+    compile 'javax.servlet:javax.servlet-api:3.0.1'
+
+    /* Mysql Depdendencies */
+    compile 'mysql:mysql-connector-java:5.1.34'
+
+    /* Spring Data / Hibernate Dependencies */
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa:1.1.4.RELEASE'
+    compile 'org.hibernate:hibernate-core:4.3.6.Final'
+    compile 'org.javassist:javassist:3.15.0-GA'
+    compile 'commons-dbcp:commons-dbcp:1.4'
+
+}
+
+// Embeded Jetty for testing
+jettyRun{
+    contextPath = "/"
+    httpPort = 8080
+}
+
+jettyRunWar{
+    contextPath = "/"
+    httpPort = 8080
+}
